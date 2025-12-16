@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Skorkilat – Live Streaming Sepak Bola Gratis Kualitas HD No Buffer</title>
+  <link rel="icon" href="https://nonton5.com/img/icon_skorkilat.png" type="image/png" />
+
+  <style>
+    :root{
+      --neon-cyan:#22d3ee; --neon-pink:#a855f7; --grid:#ffffff0f;
+      --copy:#ffffffb8; --ring:#ffffff1f; --glass:#ffffff0f;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:#000; color:#fff;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Futuristic background grid */
+    .bg-grid{position:fixed; inset:0; pointer-events:none; mask-image:radial-gradient(ellipse at center,white,transparent 70%)}
+    .bg-grid::before,.bg-grid::after{content:""; position:absolute; inset:0}
+    .bg-grid::before{
+      background-image:
+        linear-gradient(0deg, var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size:24px 24px; opacity:.45;
+    }
+    .bg-grid::after{background:linear-gradient(180deg,transparent,#22d3ee1f,#a855f71f); mix-blend-mode:screen}
+
+    header{display:flex; align-items:center; gap:.75rem; padding:16px 16px 8px}
+    .logo{
+      height:36px; width:36px; border-radius:12px;
+      background:linear-gradient(135deg,var(--neon-cyan),var(--neon-pink));
+      box-shadow:0 0 22px #a855f799; display:grid; place-items:center; font-weight:800
+    }
+    .brand{line-height:1.1}
+    .brand .kicker{font-size:12px; color:#ffffff99}
+    .brand .title{font-size:16px; font-weight:700; letter-spacing:.3px}
+
+    main{padding:0 16px 24px}
+
+    /* Carousel 1080:1350 */
+    .carousel{
+      position:relative; width:100%; max-width:520px; margin:0 auto;
+      aspect-ratio:1080/1350; border-radius:24px; overflow:hidden; user-select:none; touch-action:pan-y;
+      box-shadow:inset 0 0 0 1px #ffffff14, 0 30px 80px -20px #0ea5e95a, 0 20px 50px -30px #d946ef5a;
+      outline:1px solid var(--ring); outline-offset:-1px;
+      background:#000; /* fallback color to avoid flash */
+    }
+    .frame-glow{position:absolute; inset:-1px; border-radius:26px; pointer-events:none;
+      background:radial-gradient(120% 120% at 0% 0%, #22d3ee2e, transparent 40%),
+                 radial-gradient(120% 120% at 100% 100%, #a855f72e, transparent 40%);
+      filter:blur(12px)
+    }
+
+    .slide{position:absolute; inset:0; opacity:0; transition:opacity .9s ease}
+    .slide.active{opacity:1}
+    .slide img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(1.02); animation:revealZoom .9s ease forwards}
+    @keyframes revealZoom{to{transform:scale(1)}}
+
+    .flash{position:absolute; inset:0; background:#fff; mix-blend-mode:screen; opacity:0; pointer-events:none}
+    canvas#lightning{position:absolute; inset:0; pointer-events:none}
+
+    /* Pagination */
+    .dots{position:absolute; left:0; right:0; bottom:10px; display:flex; gap:8px; justify-content:center; align-items:center}
+    .dot{width:10px; height:10px; border-radius:50%; background:#ffffff73; transition:transform .2s, box-shadow .2s, background .2s; border:none}
+    .dot.active{background:#fff; transform:scale(1.15); box-shadow:0 0 16px #ffffffd9}
+
+    section.copy{margin-top:16px}
+    h1{font-size:20px; margin:0 0 6px}
+    p{margin:0; color:var(--copy); font-size:14px; line-height:1.5}
+
+    /* 3 tombol atas (seragam ukuran) */
+    .btn-row{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; align-items:stretch;
+    }
+    .btn{
+      position:relative; display:flex; align-items:center; justify-content:center; text-align:center;
+      height:100%; min-height:56px; padding:14px 10px; border-radius:16px;
+      font-weight:600; font-size:13px; letter-spacing:.3px; color:#fff;
+      background:linear-gradient(135deg,#22d3ee2e,#a855f72e);
+      box-shadow:inset 0 0 0 1px #ffffff1f, 0 12px 34px -18px #22d3ee73, 0 12px 34px -18px #a855f773;
+      transition:transform .15s ease;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn::before{
+      content:""; position:absolute; inset:-2px; border-radius:18px; z-index:-1;
+      background:radial-gradient(120% 120% at 10% 0%, #22d3ee4d, transparent 40%), radial-gradient(120% 120% at 90% 100%, #a855f74d, transparent 40%);
+      filter:blur(10px)
+    }
+    .btn .label{
+      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+      overflow:hidden; text-overflow:ellipsis; max-width:100%;
+    }
+
+    /* CTA bawah (biarkan berbeda) */
+    .cta{
+      margin-top:18px; display:block; text-align:center; padding:14px 16px; border-radius:18px;
+      background:linear-gradient(90deg,var(--neon-cyan),var(--neon-pink));
+      color:#000; font-weight:800; letter-spacing:.4px; text-decoration:none;
+      box-shadow:0 10px 30px -10px #22d3ee8c, 0 8px 24px -8px #a855f78c;
+    }
+
+    /* ===== INFO MATCH & TEBAK SKOR ===== */
+    .match-section { margin-top: 24px; }
+    .match-headline {
+      font-size: 16px; font-weight: 700; text-align: center; letter-spacing: .5px; margin-bottom: 12px;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .match-table {
+      width: 100%; border-collapse: collapse; font-size: 14px; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 12px 28px -10px rgba(34,211,238,.35), 0 12px 28px -10px rgba(168,85,247,.35);
+    }
+    .match-table thead {
+      background: rgba(255,255,255,.08); text-align: left; font-weight: 600; color: #fff;
+    }
+    .match-table th, .match-table td { padding: 10px; text-align: center; white-space: nowrap; }
+    .match-table td.teams { white-space: normal; }
+    .match-table tbody tr { background: rgba(255,255,255,.03); transition: background .2s; }
+    .match-table tbody tr:nth-child(even) { background: rgba(255,255,255,.06); }
+    .match-table tbody tr:hover { background: rgba(34,211,238,.15); }
+
+    /* Countdown badge */
+    .cd-badge {
+      display: inline-block; min-width: 90px; padding: 6px 10px; border-radius: 999px;
+      font-weight: 700; font-size: 12px; letter-spacing: .3px;
+      background: linear-gradient(135deg, #22d3ee33, #a855f733);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.14), 0 6px 18px -8px rgba(34,211,238,.45), 0 6px 18px -8px rgba(168,85,247,.45);
+    }
+
+    footer{padding:10px 16px 24px; text-align:center; font-size:12px; color:#ffffff99}
+
+    /* Reduce Motion */
+    @media (prefers-reduced-motion: reduce){
+      .slide{transition:none}
+      .slide img{animation:none}
+    }
+
+/* Header baru */
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 16px;
+}
+
+/* Logo link */
+.site-header .logo {
+  display: flex;
+  align-items: center;
+}
+
+/* Logo image */
+.site-header .logo img {
+  height: 40px;         /* atur tinggi sesuai kebutuhan */
+  width: auto;          /* biarkan proporsional */
+  display: block;
+}
+
+/* Brand text */
+.site-header .brand {
+  line-height: 1.2;
+}
+.site-header .brand .kicker {
+  font-size: 12px;
+  color: #ffffff99;
+}
+.site-header .brand .title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+
+  </style>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PQJCKK67');</script>
+<!-- End Google Tag Manager -->
+
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1535786960916404');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1535786960916404&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17610031585"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-17610031585');
+</script>
+
+<!-- <script src="go.js"></script> -->
+
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQJCKK67"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="site-header">
+  <a href="/" class="logo" aria-label="Skorkilat Home">
+    <img 
+      src="https://nonton5.com/img/logo_skorkilat.png" 
+      alt="Skorkilat" 
+      width="120" 
+      height="auto" 
+      loading="lazy"
+    />
+  </a>
+  <div class="brand">
+    <span class="kicker">SKORKILAT</span>
+    <h1 class="title">Live Streaming Sepak Bola</h1>
+  </div>
+</header>
+
+  <main>
+    <div class="carousel" id="carousel" aria-roledescription="carousel" aria-label="Banner">
+      <div class="frame-glow" aria-hidden="true"></div>
+
+      <!-- Slides -->
+      <div class="slide active" role="group" aria-roledescription="slide" aria-label="1 dari 3">
+        <img
+          src="https://nonton5.com/match_img/indonesiavsarab.png"
+          alt="Indonesia vs Arab Saudi"
+          loading="eager" decoding="async" />
+      </div>
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="2 dari 3">
+        <img
+          src="https://nonton5.com/match_img/indonesiavsiraq.jpg"
+          alt="Sirkuit elektronik modern"
+          loading="lazy" decoding="async" />
+      </div>
+      <!--<div class="slide" role="group" aria-roledescription="slide" aria-label="3 dari 3">
+        <img
+          src="https://nonton5.com/match_img/bodo vs tottenham sk.jpg"
+          alt="Komputasi awan berkilau"
+          loading="lazy" decoding="async" />
+      </div>
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="3 dari 3">
+        <img
+          src="https://nonton5.com/match_img/chelsea vs benfica sk.jpg"
+          alt="Komputasi awan berkilau"
+          loading="lazy" decoding="async" />
+      </div>
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="3 dari 3">
+        <img
+          src="https://nonton5.com/match_img/inter vs slavia praha sk.jpg"
+          alt="Komputasi awan berkilau"
+          loading="lazy" decoding="async" />
+      </div>
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="3 dari 3">
+        <img
+          src="https://nonton5.com/match_img/pafox vs bayern sk.jpg"
+          alt="Komputasi awan berkilau"
+          loading="lazy" decoding="async" />
+      </div>-->
+
+      <!-- Lightning layers -->
+      <canvas id="lightning" width="1080" height="1350" aria-hidden="true"></canvas>
+      <div class="flash" id="flash" aria-hidden="true"></div>
+
+      <!-- Dots -->
+      <div class="dots" id="dots" role="tablist" aria-label="Navigasi slide"></div>
+    </div>
+
+    <!-- 3 tombol atas: ukuran selalu seragam -->
+    <div class="btn-row">
+      <a href="https://t.me/skorkilatindonesia" class="btn" aria-label="JOIN EVENT" target="_blank" rel="noopener"><span class="label">TEBAK SKOR</span></a>
+      <a href="https://api.skorkilat8.com/?utm_source=adssocmed2&utm_medium=organic&utm_campaign=socmed02" class="btn" aria-label="LIVE STREAMING" target="_blank" rel="noopener"><span class="label">LIVE STREAMING</span></a>
+      <a href="https://cutt.ly/ytunm6Qk" class="btn" aria-label="DAFTAR" target="_blank" rel="noopener"><span class="label">DAFTAR</span></a>
+    </div>
+
+    <!-- CTA bawah (dibiarkan berbeda) -->
+    <a href="https://cutt.ly/ytunm6Qk" class="cta" aria-label="Dapatkan Demo">Cuan Tanpa Batas</a>
+
+    <!-- ===== INFO MATCH & EVENT TEBAK SKOR (dengan countdown) ===== -->
+    <section class="match-section">
+      <div class="match-headline">INFO MATCH &amp; EVENT TEBAK SKOR</div>
+      <table class="match-table" id="matchTable">
+        <thead>
+          <tr>
+            <th>Waktu</th>
+            <th>Tim</th>
+            <th>Countdown</th>
+            <th>League</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Ganti data-time sesuai jadwal. Gunakan format ISO lokal (tanpa Z) atau UTC (dengan Z). -->
+          <tr data-time="2025-10-09T00:15:00+07:00">
+            <td>00:15</td>
+            <td class="teams">Indonesia vs Arab Saudi</td>
+            <td><span class="cd-badge" data-countdown></span></td>
+            <td>Kualifikasi Piala Dunia 2026</td>
+          </tr>
+          <tr data-time="2025-10-12T02:30:00+07:00">
+            <td>02.30</td>
+            <td class="teams">Irak vs Indonesia</td>
+            <td><span class="cd-badge" data-countdown></span></td>
+            <td>Kualifikasi Piala Dunia 2026</td>
+          </tr>
+          <!--<tr data-time="2025-10-01T02:00:00">
+            <td>00:00</td>
+            <td class="teams">Bodo/Glimt vs Tottenham Hotspur</td>
+            <td><span class="cd-badge" data-countdown></span></td>
+            <td>Liga Champions</td>
+          </tr>
+          <tr data-time="2025-10-01T02:00:00">
+            <td>00:00</td>
+            <td class="teams">Chelsea vs Benfica</td>
+            <td><span class="cd-badge" data-countdown></span></td>
+            <td>Liga Champions</td>
+          </tr>
+          <tr data-time="2025-10-01T02:00:00">
+            <td>00:00</td>
+            <td class="teams">Inter Milan vs Slavia Praha</td>
+            <td><span class="cd-badge" data-countdown></span></td>
+            <td>Liga Champions</td>
+          </tr>
+          <tr data-time="2025-10-01T02:00:00">
+            <td>00:00</td>
+            <td class="teams">Pafos vs Bayern Munich</td>
+            <td><span class="cd-badge" data-countdown></span></td>
+            <td>Liga Champions</td>
+          </tr>-->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <section class="copy" aria-live="polite">
+    <div style="text-align: center;">
+      <h1>Nonton Pertandingan Seru, Raih Hadiah Menarik!</h1>
+      <p>
+        Saksikan live streaming pertandingan penuh aksi langsung dari perangkatmu.<br>
+        Ikuti event spesial dengan berbagai hadiah menarik untuk penonton setia.<br>
+        Desain futuristik, interaktif, dan mobile-friendly siap menemani kamu di Android &amp; iOS.
+      </p>
+    </div>
+  </section>
+
+  <footer>© <span id="year"></span> SKORKILAT — All rights reserved.</footer>
+
+  <script>
+    /* ==== Helpers ==== */
+    const clamp = (n,min,max)=>Math.max(min,Math.min(max,n));
+    const rand = (min,max)=>Math.random()*(max-min)+min;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ==== Elements ==== */
+    const carousel = document.getElementById('carousel');
+    const slides = Array.from(carousel.querySelectorAll('.slide'));
+    const dotsWrap = document.getElementById('dots');
+    const flash = document.getElementById('flash');
+    const canvas = document.getElementById('lightning');
+    const ctx = canvas.getContext('2d');
+
+    /* ==== Canvas DPI-aware resize with ResizeObserver ==== */
+    const ro = new ResizeObserver(entries=>{
+      for(const entry of entries){
+        const {width,height} = entry.contentRect;
+        const dpr = clamp(window.devicePixelRatio||1,1,2);
+        canvas.width = Math.max(1,Math.floor(width*dpr));
+        canvas.height = Math.max(1,Math.floor(height*dpr));
+        ctx.setTransform(dpr,0,0,dpr,0,0); // draw with CSS pixel units
+      }
+    });
+    ro.observe(carousel);
+
+    /* ==== Pagination Dots ==== */
+    let current = 0;
+    slides.forEach((_,i)=>{
+      const b = document.createElement('button');
+      b.className = 'dot'+(i===0?' active':'');
+      b.setAttribute('role','tab');
+      b.setAttribute('aria-label','Ke slide '+(i+1));
+      b.addEventListener('click',()=>goTo(i,true),{passive:true});
+      dotsWrap.appendChild(b);
+    });
+
+    /* ==== Autoplay + Swipe ==== */
+    let isTouching=false, startX=0, deltaX=0, autoplayId=null;
+    const AUTOPLAY_MS = 4200;
+
+    function startAutoplay(){
+      if(prefersReduced) return;            // hormati preferensi
+      stopAutoplay();
+      autoplayId = setInterval(()=>goTo((current+1)%slides.length), AUTOPLAY_MS);
+    }
+    function stopAutoplay(){ if(autoplayId){ clearInterval(autoplayId); autoplayId=null; } }
+
+    carousel.addEventListener('touchstart', e=>{
+      isTouching=true; stopAutoplay();
+      startX=e.touches[0].clientX; deltaX=0;
+    },{passive:true});
+    carousel.addEventListener('touchmove', e=>{
+      deltaX=e.touches[0].clientX-startX;
+    },{passive:true});
+    carousel.addEventListener('touchend', ()=>{
+      isTouching=false;
+      if(Math.abs(deltaX)>50){
+        if(deltaX>0) goTo((current-1+slides.length)%slides.length,true);
+        else goTo((current+1)%slides.length,true);
+      }
+      startAutoplay();
+    },{passive:true});
+
+    /* ==== Lightning Animation ==== */
+    function animateLightning(duration=520){
+      if(prefersReduced) return; // skip animasi berat
+      // quick flash
+      flash.animate([{opacity:0},{opacity:1},{opacity:.2},{opacity:0}],{duration, easing:'linear'});
+
+      const rect = carousel.getBoundingClientRect();
+      const w = rect.width, h = rect.height;
+
+      const startX = rand(w*0.2, w*0.8);
+      const endX = rand(w*0.1, w*0.9);
+      const startY = -20;
+      const endY = h*rand(0.6,0.95);
+
+      function generateBolt(x1,y1,x2,y2,jagged=18,sway=30){
+        const pts=[{x:x1,y:y1},{x:x2,y:y2}];
+        let segH=y2-y1, currSway=sway;
+        while(segH>jagged){
+          const next=[pts[0]];
+          for(let i=0;i<pts.length-1;i++){
+            const a=pts[i], b=pts[i+1];
+            const midX=(a.x+b.x)/2 + (Math.random()*2-1)*currSway;
+            const midY=(a.y+b.y)/2;
+            next.push({x:midX,y:midY}, b);
+          }
+          pts.splice(0,pts.length,...next);
+          segH/=2; currSway/=2;
+        }
+        return pts;
+      }
+
+      const trunk = generateBolt(startX,startY,endX,endY);
+      function spawnBranches(points,count=(rand(2,4)|0)){
+        const arr=[];
+        for(let i=0;i<count;i++){
+          const idx=Math.floor(rand(points.length*0.3, points.length*0.8));
+          const p=points[idx], len=rand(h*0.08,h*0.22), ang=rand(-Math.PI/2.8,Math.PI/2.8);
+          const bx=p.x+Math.cos(ang)*len, by=p.y+Math.sin(ang)*len;
+          arr.push(generateBolt(p.x,p.y,bx,by,14,20));
+        }
+        return arr;
+      }
+      const branches = spawnBranches(trunk);
+
+      const t0=performance.now();
+      canvas.getAnimations().forEach(a=>a.cancel());
+      canvas.style.opacity=1;
+
+      const draw=(now)=>{
+        const t=now-t0, p=Math.min(1,t/duration);
+        ctx.clearRect(0,0,w,h);
+        ctx.globalCompositeOperation='lighter';
+
+        ctx.lineCap='round';
+        ctx.shadowBlur=18; ctx.shadowColor='rgba(168,85,247,.9)';
+        ctx.lineWidth=5; ctx.strokeStyle='rgba(34,211,238,0.7)'; drawPath(trunk,easeOut(p));
+        branches.forEach(b=>{ctx.lineWidth=3; ctx.strokeStyle='rgba(168,85,247,0.6)'; drawPath(b,easeOut(p*0.9));});
+
+        ctx.shadowBlur=0;
+        ctx.lineWidth=2; ctx.strokeStyle='rgba(255,255,255,0.95)'; drawPath(trunk,easeOut(p));
+        branches.forEach(b=>{ctx.lineWidth=1.6; ctx.strokeStyle='rgba(255,255,255,0.85)'; drawPath(b,easeOut(p*0.9));});
+
+        if(p>0.6 && Math.random()<0.25){ ctx.lineWidth=2.6; ctx.strokeStyle='rgba(255,255,255,0.55)'; drawPath(trunk,Math.random()); }
+
+        if(p<1) requestAnimationFrame(draw);
+        else canvas.animate([{opacity:1},{opacity:0}],{duration:220,fill:'forwards'});
+      };
+      requestAnimationFrame(draw);
+
+      function drawPath(points,progress){
+        const len=Math.max(2,Math.floor(points.length*progress));
+        ctx.beginPath(); ctx.moveTo(points[0].x,points[0].y);
+        for(let i=1;i<len;i++) ctx.lineTo(points[i].x,points[i].y);
+        ctx.stroke();
+      }
+      function easeOut(x){return 1-(1-x)*(1-x)}
+    }
+
+    /* ==== Slide Control ==== */
+    function goTo(nextIndex,userAction=false){
+      if(nextIndex===current) return;
+      slides[current].classList.remove('active');
+      current=(nextIndex+slides.length)%slides.length;
+      slides[current].classList.add('active');
+      dotsWrap.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+      animateLightning(560);
+    }
+
+    /* ==== Init ==== */
+    document.getElementById('year').textContent = new Date().getFullYear();
+    startAutoplay();
+    carousel.addEventListener('click', ()=>goTo(current+1,true), {passive:true});
+
+    // Keyboard nav (optional on desktop)
+    window.addEventListener('keydown', e=>{
+      if(e.key==='ArrowRight') goTo(current+1,true);
+      else if(e.key==='ArrowLeft') goTo(current-1,true);
+    });
+  </script>
+
+  <!-- Script COUNTDOWN untuk tabel match -->
+  <script>
+    (function(){
+      const table = document.getElementById('matchTable');
+      if(!table) return;
+
+      const rows = Array.from(table.querySelectorAll('tbody tr')).map(tr => {
+        const timeStr = tr.getAttribute('data-time');
+        const target = timeStr ? new Date(timeStr) : null;
+        const badge = tr.querySelector('[data-countdown]');
+        return { tr, target, badge };
+      });
+
+      function fmt(n){ return n.toString().padStart(2,'0'); }
+
+      function render(){
+        const now = new Date();
+        rows.forEach(({target, badge}) => {
+          if(!target || !badge) return;
+          const diff = target - now;
+
+          if (diff <= 0) {
+            badge.textContent = 'FT';
+            badge.style.opacity = 0.85;
+            return;
+          }
+
+          const s = Math.floor(diff/1000);
+          const d = Math.floor(s / 86400);
+          const h = Math.floor((s % 86400) / 3600);
+          const m = Math.floor((s % 3600) / 60);
+          const sec = s % 60;
+
+          badge.textContent = (d>0)
+            ? `${d}d ${fmt(h)}:${fmt(m)}:${fmt(sec)}`
+            : `${fmt(h)}:${fmt(m)}:${fmt(sec)}`;
+        });
+      }
+
+      render();
+      let interval = setInterval(render, 1000);
+
+      // Hemat resource saat tab disembunyikan
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          clearInterval(interval);
+          interval = null;
+        } else if (!interval) {
+          render();
+          interval = setInterval(render, 1000);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
