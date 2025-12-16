@@ -362,7 +362,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <!-- CTA bawah (dibiarkan berbeda) -->
-    <a href="https://cutt.ly/ytunm6Qk" class="cta" aria-label="Dapatkan Demo">Cuan Tanpa Batas</a>
+   <a href="https://cutt.ly/ytunm6Qk"
+   class="cta"
+   aria-label="Dapatkan Demo"
+   onclick="event.preventDefault();
+            fbq('track','CompleteRegistration',{
+              content_name:'Cuan Tanpa Batas',
+              content_category:'CTA'
+            });
+            setTimeout(function(){
+              window.open('https://cutt.ly/ytunm6Qk','_blank');
+            },200);">
+  Cuan Tanpa Batas
+</a>
+
 
     <!-- ===== INFO MATCH & EVENT TEBAK SKOR (dengan countdown) ===== -->
     <section class="match-section">
@@ -652,6 +665,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </script>
 </body>
 </html>
+
 
 
 
