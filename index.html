@@ -323,9 +323,42 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- 3 tombol atas: ukuran selalu seragam -->
     <div class="btn-row">
-      <a href="https://t.me/skorkilatindonesia" class="btn" aria-label="JOIN EVENT" target="_blank" rel="noopener"><span class="label">TEBAK SKOR</span></a>
-      <a href="https://api.skorkilat8.com/?utm_source=adssocmed2&utm_medium=organic&utm_campaign=socmed02" class="btn" aria-label="LIVE STREAMING" target="_blank" rel="noopener"><span class="label">LIVE STREAMING</span></a>
-      <a href="https://cutt.ly/ytunm6Qk" class="btn" aria-label="DAFTAR" target="_blank" rel="noopener"><span class="label">DAFTAR</span></a>
+      <a href="https://t.me/skorkilatindonesia"
+   class="btn"
+   aria-label="JOIN EVENT"
+   target="_blank"
+   rel="noopener"
+   onclick="fbq('track', 'Lead', {
+     content_name: 'Tebak Skor - Telegram',
+     content_category: 'Engagement'
+   });">
+  <span class="label">TEBAK SKOR</span>
+</a>
+
+      <a href="https://api.skorkilat8.com/?utm_source=adssocmed2&utm_medium=organic&utm_campaign=socmed02"
+   class="btn"
+   aria-label="LIVE STREAMING"
+   target="_blank"
+   rel="noopener"
+   onclick="fbq('track', 'ViewContent', {
+     content_name: 'Live Streaming',
+     content_category: 'Streaming'
+   });">
+  <span class="label">LIVE STREAMING</span>
+</a>
+
+      <a href="https://cutt.ly/ytunm6Qk"
+   class="btn"
+   aria-label="DAFTAR"
+   target="_blank"
+   rel="noopener"
+   onclick="fbq('track', 'CompleteRegistration', {
+     content_name: 'Pendaftaran Akun',
+     status: 'started'
+   });">
+  <span class="label">DAFTAR</span>
+</a>
+
     </div>
 
     <!-- CTA bawah (dibiarkan berbeda) -->
@@ -619,5 +652,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </script>
 </body>
 </html>
+
 
 
